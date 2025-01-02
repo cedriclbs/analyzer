@@ -19,35 +19,25 @@ public class Main {
 
         System.out.println("Analyse terminée. Résultats enregistrés dans " + outputFilePath);
         
-        // 2) Parser le CSV (bigrams) en une List<NGramFrequency> 
-        //    Tu peux reprendre l’exemple de parse CSV ou écrire un parseur plus simple
+        // Parser le CSV (bigrams) en une List<NGramFrequency> 
         List<NGramFrequency> bigrams =frequencies;
 
-        // 3) Pour l'exemple, on n'a pas de 1-gram, 3-gram => on simule des listes vides
+        // Pour l'exemple, on n'a pas de 1-gram, 3-gram => on simule des listes vides
         List<NGramFrequency> unigrams = List.of();
         List<NGramFrequency> trigrams = List.of();
 
-        // 4) Construire un KeyboardLayout minimal
+        // Construire un KeyboardLayout minimal
         KeyboardLayout layout = new KeyboardLayout();
         layout.addAllLetters();
 
-        // 5) Construire l’évaluateur avec les poids souhaités
-        LayoutEvaluator evaluator = new LayoutEvaluator(
-            1.0,  // weightSfb
-            1.0,  // weightCiseau
-            0.5,  // weightLsb
-            2.0,  // weightRoulement
-            1.5,  // weightAlternance
-            1.2,  // weightRedirection
-            2.0,  // weightMauvaiseRedirection
-            1.0   // weightSkipgram
-        );
+        // Construire l’évaluateur avec les poids souhaités
+        LayoutEvaluator evaluator = new LayoutEvaluator(1.0, 1.0, 0.5, 2.0,  1.5,  1.2,  2.0,  1.0);
 
-        // 6) Calculer le score
+        // Calculer le score
         double score = evaluator.evaluateLayout(unigrams, bigrams, trigrams, layout);
         System.out.println("Score global : " + score);
 
-        // 7) Enregistrer le résultat dans un CSV (nomLayout, scoreLayout)
+        // Enregistrer le résultat dans un CSV (nomLayout, scoreLayout)
         FileManagement fileExport = new FileExport();
         fileExport.exportToCsv(
             "src/main/resources/output/layout-score.csv",

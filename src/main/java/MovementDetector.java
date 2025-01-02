@@ -72,16 +72,14 @@ public class MovementDetector {
         // "Roulement" : heuristique simplifiée.
         // Par ex, si diff de colonne = 1 sur la même main et le doigt est différent, on appelle ça un roulement.
         if (k1.hand() == k2.hand()) {
-            return (abs(k1.column() - k2.column()) == 1)
-                    && (k1.finger() != k2.finger());
+            return (abs(k1.column() - k2.column()) == 1) && (k1.finger() != k2.finger());
         }
         return false;
     }
 
     private static boolean isLateralStretch(Key k1, Key k2) {
         // "LSB" : un grand écart latéral sur la même main => |column1 - column2| >= 2
-        return (k1.hand() == k2.hand()) 
-                && abs(k1.column() - k2.column()) >= 2;
+        return (k1.hand() == k2.hand()) && abs(k1.column() - k2.column()) >= 2;
     }
 
     // Méthodes internes pour la détection des trigrammes
@@ -95,9 +93,7 @@ public class MovementDetector {
 
     private static boolean isMauvaiseRedirection(Key k1, Key k2, Key k3) {
         // "Mauvaise" redirection : par exemple, aucune des trois touches n'est sur l'index
-        return (k1.finger() != Finger.INDEX
-                && k2.finger() != Finger.INDEX
-                && k3.finger() != Finger.INDEX);
+        return (k1.finger() != Finger.INDEX && k2.finger() != Finger.INDEX && k3.finger() != Finger.INDEX);
     }
 
     private static boolean isSkipgram(Key k1, Key k2, Key k3) {

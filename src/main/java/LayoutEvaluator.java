@@ -23,16 +23,7 @@ public class LayoutEvaluator {
     private final double weightMauvaiseRedirection;
     private final double weightSkipgram;
 
-    public LayoutEvaluator(
-            double weightSfb,
-            double weightCiseau,
-            double weightLsb,
-            double weightRoulement,
-            double weightAlternance,
-            double weightRedirection,
-            double weightMauvaiseRedirection,
-            double weightSkipgram
-    ) {
+    public LayoutEvaluator(double weightSfb,double weightCiseau,double weightLsb,double weightRoulement,double weightAlternance,double weightRedirection,double weightMauvaiseRedirection,double weightSkipgram) {
         this.weightSfb = weightSfb;
         this.weightCiseau = weightCiseau;
         this.weightLsb = weightLsb;
