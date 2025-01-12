@@ -9,27 +9,27 @@ import java.io.InputStream;
  */
 public class JsonLoader {
 
-    /**
+   /**
      * Charge un fichier JSON depuis le classpath et le convertit en un objet de type {@code KeyboardsJson}.
-     *
-     * @param resourcePath le chemin du fichier JSON à charger (relatif au classpath)
-     * @return un objet {@code KeyboardsJson} représentant le contenu du fichier JSON
-     * @throws RuntimeException si le fichier JSON est introuvable ou si une erreur se produit lors du parsing
+     * @param resourcePath le chemin relatif du fichier JSON dans le classpath.
+     * Par exemple, "resources/keyboards.json".
+     * @return un objet {@code KeyboardsJson} représentant le contenu du fichier JSON.
+     * @throws RuntimeException si le fichier JSON est introuvable ou si une erreur se produit
+     * lors de la lecture ou du parsing.
      */
     public static KeyboardsJson loadKeyboards(String resourcePath) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-
-            // Charger le fichier JSON depuis le classpath
+            
             InputStream input = JsonLoader.class.getClassLoader().getResourceAsStream(resourcePath);
             if (input == null) {
                 throw new RuntimeException("Fichier JSON non trouvé : " + resourcePath);
             }
-
-            // Lire le JSON et le convertir en objet KeyboardsJson
+    
             return mapper.readValue(input, KeyboardsJson.class);
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de la lecture du JSON : " + resourcePath, e);
         }
     }
+    
 }

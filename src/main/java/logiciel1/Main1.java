@@ -59,7 +59,7 @@ public class Main1 {
 
         // 4) Exporte en CSV
         FileExport exporter = new FileExport();
-        String outputCsvPath = "output-ngram1.csv";
+        String outputCsvPath = "src/main/resources/output/ngram-frequencies1.csv";
         exporter.exportToCsv(outputCsvPath, unigrams, bigrams, trigrams);
 
         System.out.println("\nExport CSV terminé : " + outputCsvPath);
