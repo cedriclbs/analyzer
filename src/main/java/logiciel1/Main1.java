@@ -47,7 +47,7 @@ public class Main1 {
             }
         } while (inputFilePath == null);
 
-        // 2) Lire le fichier choisi
+        // 2) Lit le fichier choisi
         FileReader fileReader = new FileReader();
         String corpusContent = fileReader.readFile(inputFilePath);
 
