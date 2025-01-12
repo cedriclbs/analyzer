@@ -2,10 +2,33 @@ package logiciel2;
 
 import logiciel1.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * La classe {@code Main2} permet d'évaluer une disposition de clavier 
+ * en calculant un score global basé sur un texte choisi et une disposition de clavier chargée depuis un fichier JSON.
+ * 
+ * Les étapes incluent :
+ * 1. Chargement des dispositions de clavier depuis un fichier JSON.
+ * 2. Sélection d'une disposition de clavier (par exemple, "FR" ou "EN").
+ * 3. Lecture et analyse d'un fichier texte pour générer des n-grammes.
+ * 4. Calcul du score d'évaluation pour la disposition sélectionnée.
+ */
 public class Main2 {
+
+    /**
+     * Méthode principale du programme d'évaluation des dispositions de clavier.
+     * Elle guide l'utilisateur à travers les étapes suivantes :
+     * <ul>
+     *   <li>Chargement des dispositions de clavier depuis un fichier JSON.</li>
+     *   <li>Sélection d'une disposition (par exemple, "FR" ou "EN").</li>
+     *   <li>Lecture et analyse d'un fichier texte pour générer les unigrams, bigrams et trigrammes.</li>
+     *   <li>Export des fréquences des n-grammes dans un fichier CSV.</li>
+     *   <li>Calcul du score d'évaluation pour la disposition choisie.</li>
+     * </ul>
+     *
+     * @param args arguments de la ligne de commande (non utilisés ici).
+     */
     public static void main(String[] args) {
         // 1) Charger les dispositions de claviers depuis le JSON
         KeyboardsJson data = JsonLoader.loadKeyboards("config/keyboards.json");
@@ -66,7 +89,7 @@ public class Main2 {
         CorpusAnalyzer analyzer = new CorpusAnalyzer();
         List<NGramFrequency> bigrams = analyzer.nGramList(corpusContent, 2);
         List<NGramFrequency> unigrams = analyzer.nGramList(corpusContent, 1);
-        List<NGramFrequency> trigrams =analyzer.nGramList(corpusContent, 3);
+        List<NGramFrequency> trigrams = analyzer.nGramList(corpusContent, 3);
 
         // Exporter les bigrams dans un fichier CSV
         FileExport exporter = new FileExport();
@@ -75,9 +98,7 @@ public class Main2 {
 
         System.out.println("\nLes fréquences des NGrammes ont été enregistrées dans : " + outputCsvPath);
 
-        
         // 6) Configurer l'évaluateur
-        // Exemple d'instanciation
         LayoutEvaluator evaluator = new LayoutEvaluator(
             1.0,  // weightSfb
             1.0,  // weightCiseau
@@ -87,7 +108,7 @@ public class Main2 {
             1.2,  // weightRedirection
             2.0,  // weightMauvaiseRedirection
             1.0,  // weightSkipgram
-            1.0   // weightFingerDistribution (NOUVEAU)
+            1.0   // weightFingerDistribution
         );
 
         // 7) Calculer le score

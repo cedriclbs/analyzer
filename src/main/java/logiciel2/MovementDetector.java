@@ -1,16 +1,20 @@
 package logiciel2;
 
-import logiciel1.*;
 import static java.lang.Math.abs;
 
 /**
- * Classe utilitaire : on lui donne 2 ou 3 touches,
- * elle nous dit si c'est un SFB, un ciseau, un skipgram, etc.
+ * La classe utilitaire {@code MovementDetector} permet d'analyser
+ * les mouvements entre deux ou trois touches sur un clavier et de
+ * les classifier en différents types (exemple : SFB, ciseau, skipgram, etc.).
  */
 public class MovementDetector {
 
     /**
-     * Détecte le type d'un bigram (2 touches).
+     * Détecte le type de mouvement pour un bigram (deux touches).
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @return le type de mouvement détecté (exemple : SFB, ciseau, alternance, etc.)
      */
     public static MovementType detectBigramMovement(Key k1, Key k2) {
         // Même main, même doigt => SFB (Single-Finger Bigram)
@@ -18,7 +22,7 @@ public class MovementDetector {
             return MovementType.SFB;
         }
 
-        // Même main ? => ciseau, roulement, extension latérale (LSB), ...
+        // Même main ? => ciseau, roulement, extension latérale (LSB)
         if (k1.hand() == k2.hand()) {
             if (isCiseau(k1, k2)) {
                 return MovementType.CISEAU;
@@ -39,16 +43,21 @@ public class MovementDetector {
     }
 
     /**
-     * Détecte le type d'un trigram (3 touches).
+     * Détecte le type de mouvement pour un trigram (trois touches).
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @param k3 la troisième touche
+     * @return le type de mouvement détecté (exemple : redirection, skipgram, etc.)
      */
     public static MovementType detectTrigramMovement(Key k1, Key k2, Key k3) {
-        // Vérifier si les 3 touches sont sur la même main
+        // Vérifie si les trois touches sont sur la même main
         boolean sameHand = (k1.hand() == k2.hand()) && (k2.hand() == k3.hand());
         if (!sameHand) {
-            // si ce n'est pas la même main, on n'a pas défini de mouvement "spécial"
             return MovementType.UNKNOWN;
         }
-        // => c'est la même main, on vérifie redirection, skipgram...
+
+        // Analyse des mouvements sur la même main
         if (isRedirection(k1, k2, k3)) {
             if (isMauvaiseRedirection(k1, k2, k3)) {
                 return MovementType.MAUVAISE_REDIRECTION;
@@ -62,48 +71,77 @@ public class MovementDetector {
         return MovementType.UNKNOWN;
     }
 
-
-    // Méthodes internes pour la détection des bigrammes
+    /**
+     * Vérifie si deux touches forment un mouvement en "ciseau".
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @return {@code true} si le mouvement est un ciseau, {@code false} sinon
+     */
     private static boolean isCiseau(Key k1, Key k2) {
-        // "Ciseau" : par exemple si la différence de row est >= 2
         return abs(k1.row() - k2.row()) >= 2;
     }
 
+    /**
+     * Vérifie si deux touches forment un "roulement".
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @return {@code true} si le mouvement est un roulement, {@code false} sinon
+     */
     private static boolean isRoulement(Key k1, Key k2) {
-        // "Roulement" : heuristique simplifiée.
-        // Par ex, si diff de colonne = 1 sur la même main et le doigt est différent, on appelle ça un roulement.
         if (k1.hand() == k2.hand()) {
             return (abs(k1.column() - k2.column()) == 1) && (k1.finger() != k2.finger());
         }
         return false;
     }
 
+    /**
+     * Vérifie si deux touches forment une extension latérale.
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @return {@code true} si le mouvement est une extension latérale, {@code false} sinon
+     */
     private static boolean isLateralStretch(Key k1, Key k2) {
-        // "LSB" : un grand écart latéral sur la même main => |column1 - column2| >= 2
         return (k1.hand() == k2.hand()) && abs(k1.column() - k2.column()) >= 2;
     }
 
-    // Méthodes internes pour la détection des trigrammes
+    /**
+     * Vérifie si trois touches forment une redirection.
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @param k3 la troisième touche
+     * @return {@code true} si le mouvement est une redirection, {@code false} sinon
+     */
     private static boolean isRedirection(Key k1, Key k2, Key k3) {
-        // Redirection : inversion de direction entre (k1->k2) et (k2->k3)
         int d12 = k2.column() - k1.column();
         int d23 = k3.column() - k2.column();
-        // Signe différent => produit < 0
         return (d12 * d23 < 0);
     }
 
+    /**
+     * Vérifie si trois touches forment une mauvaise redirection.
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @param k3 la troisième touche
+     * @return {@code true} si le mouvement est une mauvaise redirection, {@code false} sinon
+     */
     private static boolean isMauvaiseRedirection(Key k1, Key k2, Key k3) {
-        // "Mauvaise" redirection : par exemple, aucune des trois touches n'est sur l'index
         return (k1.finger() != Finger.INDEX && k2.finger() != Finger.INDEX && k3.finger() != Finger.INDEX);
     }
 
+    /**
+     * Vérifie si trois touches forment un skipgram.
+     *
+     * @param k1 la première touche
+     * @param k2 la deuxième touche
+     * @param k3 la troisième touche
+     * @return {@code true} si le mouvement est un skipgram, {@code false} sinon
+     */
     private static boolean isSkipgram(Key k1, Key k2, Key k3) {
-        // Skipgram (SKS) : k1 et k3 = même doigt/main, k2 = autre main
-        // => sauf qu'on a vérifié sameHand avant, donc ici on adaptera la condition :
-        // On le déclare skipgram si k1 et k3 sont le même doigt, 
-        // et k2 est... sur l'autre main ? (Mais on a "sameHand = true" plus haut.)
-        // Ex simplifié : si (k1 == k3) en doigt, c'est un skipgram.
         return (k1.finger() == k3.finger());
     }
-
 }

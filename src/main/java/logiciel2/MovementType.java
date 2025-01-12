@@ -1,16 +1,18 @@
 package logiciel2;
 
 /**
- * Les types de mouvements (bigrammes/trigrammes) qu'on veut détecter.
+ * L'énumération {@code MovementType} représente les différents types de mouvements
+ * possibles entre les touches d'un clavier, que ce soit pour des bigrammes ou des trigrammes.
+ * Ces mouvements sont utilisés pour évaluer l'ergonomie d'une disposition de clavier.
  */
 public enum MovementType {
-    SFB,                  // Single-Finger Bigram
-    LSB,                  // Lateral Stretch Bigram
-    CISEAU,               // ciseau
-    ROULEMENT,            // roulement (rolling)
-    ALTERNANCE,           // main gauche -> main droite ou l'inverse
-    REDIRECTION,          // changement de direction (main unique)
-    MAUVAISE_REDIRECTION, // redirection "pire" (sans index, par ex.)
-    SKIPGRAM,             // skipgram (same finger, main unique, mais séparé par l'autre main)
-    UNKNOWN               // inconnu
+    SFB,
+    LSB,
+    CISEAU,
+    ROULEMENT,
+    ALTERNANCE,
+    REDIRECTION,
+    MAUVAISE_REDIRECTION,
+    SKIPGRAM,
+    UNKNOWN
 }
