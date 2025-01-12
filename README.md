@@ -97,14 +97,4 @@ Les configurations pour les dispositions clavier sont dans le dossier `src/main/
 
 ---
 
-## Nettoyage
-
-Pour supprimer les fichiers générés par Gradle, exécutez :
-
-```bash
-gradle clean
-```
-
----
-
 Nous avons conçu ce projet avec sérieux et détermination : juste assez pour nous challenger, mais pas au point de nous envoyer à la NASA.
