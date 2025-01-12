@@ -24,19 +24,19 @@ public class FileExport implements FileManagement {
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write("NGram, Frequency\n");
     
-            // Écrire les unigrams
+            // Écrit les unigrams
             writer.write("# Unigrams\n");
             for (NGramFrequency freq : unigrams) {
                 writer.write(freq.nGram() + "," + freq.frequency() + "\n");
             }
     
-            // Écrire les bigrams
+            // Écrit les bigrams
             writer.write("\n# Bigrams\n");
             for (NGramFrequency freq : bigrams) {
                 writer.write(freq.nGram() + "," + freq.frequency() + "\n");
             }
     
-            // Écrire les trigrams
+            // Écrit les trigrams
             writer.write("\n# Trigrams\n");
             for (NGramFrequency freq : trigrams) {
                 writer.write(freq.nGram() + "," + freq.frequency() + "\n");

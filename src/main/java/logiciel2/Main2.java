@@ -30,10 +30,10 @@ public class Main2 {
      * @param args arguments de la ligne de commande (non utilisés ici).
      */
     public static void main(String[] args) {
-        // 1) Charger les dispositions de claviers depuis le JSON
+        // 1) Charge les dispositions de claviers depuis le JSON
         KeyboardsJson data = JsonLoader.loadKeyboards("config/keyboards.json");
 
-        // 2) Demander à l'utilisateur de choisir un clavier
+        // 2) Demande à l'utilisateur de choisir un clavier
         Scanner sc = new Scanner(System.in);
         String userChoice;
         do {
@@ -85,20 +85,20 @@ public class Main2 {
         FileManagement fileManager = new FileReader();
         String corpusContent = fileManager.readFile(inputFilePath);
 
-        // 5) Construire les nGram (bigrammes dans cet exemple)
+        // 5) Construire les nGram 
         CorpusAnalyzer analyzer = new CorpusAnalyzer();
         List<NGramFrequency> bigrams = analyzer.nGramList(corpusContent, 2);
         List<NGramFrequency> unigrams = analyzer.nGramList(corpusContent, 1);
         List<NGramFrequency> trigrams = analyzer.nGramList(corpusContent, 3);
 
-        // Exporter les bigrams dans un fichier CSV
+        // Exporte les bigrams dans un fichier CSV
         FileExport exporter = new FileExport();
         String outputCsvPath = "output-ngram2.csv";
         exporter.exportToCsv(outputCsvPath, bigrams, unigrams, trigrams);
 
         System.out.println("\nLes fréquences des NGrammes ont été enregistrées dans : " + outputCsvPath);
 
-        // 6) Configurer l'évaluateur
+        // 6) Configure l'évaluateur
         LayoutEvaluator evaluator = new LayoutEvaluator(
             1.0,  // weightSfb
             1.0,  // weightCiseau
@@ -111,7 +111,7 @@ public class Main2 {
             1.0   // weightFingerDistribution
         );
 
-        // 7) Calculer le score
+        // 7) Calcul le score
         double score = evaluator.evaluateLayout(unigrams, bigrams, trigrams, layout);
         System.out.println("\nScore global pour " + userChoice + " avec le texte choisi = " + score + "\n");
     }
