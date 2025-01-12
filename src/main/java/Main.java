@@ -1,48 +1,23 @@
 package main.java;
-import java.util.List;
-import java.util.Map;
+
+import main.java.Main1.*;
+import main.java.logiciel2.*;
 
 public class Main {
     public static void main(String[] args) {
-        String inputFilePath = "src/main/resources/input/sample-corpus.txt";
-        String outputFilePath = "src/main/resources/output/ngram-frequencies.csv";
-        int n = 2;
+        if (args.length < 1) {
+            System.out.println("Usage :  build/libs/les-biens-lothsavan-projet-cpoo5-24-25-all.jar");
+            System.out.println("Options :");
+            System.out.println("  1 -> Analyseur de texte");
+            System.out.println("  2 -> Évaluateur de disposition clavier");
+            return;
+        }
 
-        FileManagement fileManager = new FileReader();
-        String corpusContent = fileManager.readFile(inputFilePath);
-
-        CorpusAnalyzer corpusAnalyzer = new CorpusAnalyzer();
-        List<NGramFrequency> frequencies = corpusAnalyzer.nGramList(corpusContent, n);
-
-        fileManager = new FileExport();
-        fileManager.exportToCsv(outputFilePath, frequencies);
-
-        System.out.println("Analyse terminée. Résultats enregistrés dans " + outputFilePath);
-
-        // Parser le CSV (bigrams) en une List<NGramFrequency> 
-        List<NGramFrequency> bigrams =frequencies;
-
-        // Pour l'exemple, on n'a pas de 1-gram, 3-gram => on simule des listes vides
-        List<NGramFrequency> unigrams = List.of();
-        List<NGramFrequency> trigrams = List.of();
-
-        // Construire un KeyboardLayout minimal
-        KeyboardLayout layout = new KeyboardLayout();
-        layout.addAllLetters();
-
-        // Construire l’évaluateur avec les poids souhaités
-        LayoutEvaluator evaluator = new LayoutEvaluator(1.0, 1.0, 0.5, 2.0,  1.5,  1.2,  2.0,  1.0);
-
-        // Calculer le score
-        double score = evaluator.evaluateLayout(unigrams, bigrams, trigrams, layout);
-        System.out.println("Score global : " + score);
-
-        // Enregistrer le résultat dans un CSV (nomLayout, scoreLayout)
-        FileManagement fileExport = new FileExport();
-        fileExport.exportToCsv(
-            "src/main/resources/output/layout-score.csv",
-            List.of(new NGramFrequency("MyLayout", (int) score))
-        );
-
+        String choix = args[0];
+        switch (choix) {
+            case "1" -> Main1.main(new String[0]);
+            case "2" -> Main2.main(new String[0]);
+            default -> System.out.println("Option invalide. Utilisez 1 ou 2.");
+        }
     }
 }

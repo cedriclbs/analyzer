@@ -1,19 +1,23 @@
 package main.java;
 
-import main.java.NGramFrequency;
+import main.java.*;  
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Calcule un "score" global d'une disposition de clavier.
  * 
- * 1) on regarde la répartition mainG/mainD sur les 1-grammes
- * 2) on pénalise/récompense certains bigrammes
- * 3) idem pour trigrammes
- * 4) on renvoie le score final
+ * 1) on regarde la répartition mainG/mainD sur les 1-grammes (déjà existant)
+ * 2) on regarde la répartition par doigts (NOUVEAU)
+ * 3) on pénalise/récompense certains bigrammes
+ * 4) on pénalise/récompense certains trigrammes
+ * 5) on renvoie le score final
  */
 public class LayoutEvaluator {
 
-    // on imagine des poids.
+    // on imagine des poids (vous pouvez les ajuster à votre guise) 
     private final double weightSfb; 
     private final double weightCiseau;
     private final double weightLsb;
@@ -23,7 +27,31 @@ public class LayoutEvaluator {
     private final double weightMauvaiseRedirection;
     private final double weightSkipgram;
 
-    public LayoutEvaluator(double weightSfb,double weightCiseau,double weightLsb,double weightRoulement,double weightAlternance,double weightRedirection,double weightMauvaiseRedirection,double weightSkipgram) {
+    // NOUVEAU : on ajoute un poids pour la répartition par doigts
+    private final double weightFingerDistribution;
+
+    // Définir une répartition « idéale » par doigt.
+    // Ici un exemple arbitraire, à vous d'ajuster.
+    // On indique un pourcentage sur l'ensemble des frappes.
+    private final Map<Finger, Double> idealFingerDistribution = Map.of(
+        Finger.PINKY,  0.10, // 10%
+        Finger.RING,   0.15, // 15%
+        Finger.MIDDLE, 0.20, // 20%
+        Finger.INDEX,  0.45, // 45%
+        Finger.THUMB,  0.10  // 10% (si vous gérez l'espace, etc.)
+    );
+
+    public LayoutEvaluator(
+            double weightSfb,
+            double weightCiseau,
+            double weightLsb,
+            double weightRoulement,
+            double weightAlternance,
+            double weightRedirection,
+            double weightMauvaiseRedirection,
+            double weightSkipgram,
+            double weightFingerDistribution
+    ) {
         this.weightSfb = weightSfb;
         this.weightCiseau = weightCiseau;
         this.weightLsb = weightLsb;
@@ -32,6 +60,7 @@ public class LayoutEvaluator {
         this.weightRedirection = weightRedirection;
         this.weightMauvaiseRedirection = weightMauvaiseRedirection;
         this.weightSkipgram = weightSkipgram;
+        this.weightFingerDistribution = weightFingerDistribution;
     }
 
     /**
@@ -56,10 +85,13 @@ public class LayoutEvaluator {
 
         double totalScore = 0.0;
 
-        // Répartition main gauche / droite sur les unigrams
-        totalScore += computeUnigramScore(unigrams, layout);
+        // 1) Répartition main gauche / droite sur les unigrams (malus)
+        totalScore += computeHandImbalanceScore(unigrams, layout);
 
-        // Score sur les bigrammes
+        // 2) Répartition par doigts (NOUVEAU malus)
+        totalScore += computeFingerImbalanceScore(unigrams, layout);
+
+        // 3) Score sur les bigrammes
         for (NGramFrequency f : bigrams) {
             String bigram = f.nGram();
             if (bigram.length() != 2) continue;
@@ -73,7 +105,7 @@ public class LayoutEvaluator {
             totalScore += movementScore * f.frequency();
         }
 
-        // Score sur les trigrammes
+        // 4) Score sur les trigrammes
         for (NGramFrequency f : trigrams) {
             String trigram = f.nGram();
             if (trigram.length() != 3) continue;
@@ -88,16 +120,19 @@ public class LayoutEvaluator {
             totalScore += movementScore * f.frequency();
         }
 
-        // Normalisation éventuelle (pour comparer plusieurs layouts)
-        double normalized = totalScore / (double) totalOccurrences;
-        return normalized;
+        // Normalisation par le nombre total d'occurrences
+        if (totalOccurrences == 0) {
+            return totalScore; 
+        } else {
+            return totalScore / (double) totalOccurrences;
+        }
     }
 
     /**
-     * on pénalise le déséquilibre main gauche/droite
-     * en calculant un petit malus. 
+     * On pénalise le déséquilibre main gauche/droite
+     * en calculant un petit malus (code initial).
      */
-    private double computeUnigramScore(List<NGramFrequency> unigrams, KeyboardLayout layout) {
+    private double computeHandImbalanceScore(List<NGramFrequency> unigrams, KeyboardLayout layout) {
         long leftCount = 0;
         long rightCount = 0;
         for (NGramFrequency f : unigrams) {
@@ -112,14 +147,59 @@ public class LayoutEvaluator {
                 }
             }
         }
-        // On calcule la proportion main gauche
         long total = leftCount + rightCount;
         if (total == 0) return 0.0;
-        double leftRatio = (double)leftCount / (double)total;
-        // On pénalise l'écart à 50% (c'est arbitraire)
+
+        double leftRatio = (double) leftCount / total;
         double imbalance = Math.abs(leftRatio - 0.5);
+
         // Petit malus => plus l'imbalance est grand, plus on retire de points
-        return -(imbalance * 1000.0); 
+        // Ici, -1000.0 * imbalance par défaut (libre à vous de changer)
+        return -(imbalance * 1000.0);
+    }
+
+    /**
+     * NOUVEAU :
+     * On calcule la répartition réelle par doigt, 
+     * on compare à une répartition idéale (idealFingerDistribution).
+     * On applique un malus si on est éloigné de l'idéal.
+     */
+    private double computeFingerImbalanceScore(List<NGramFrequency> unigrams, KeyboardLayout layout) {
+        // 1) Compter le nombre de frappes par doigt
+        Map<Finger, Long> countByFinger = new HashMap<>();
+        long total = 0;
+
+        for (NGramFrequency f : unigrams) {
+            if (f.nGram().length() != 1) continue;
+            char c = f.nGram().charAt(0);
+            Key k = layout.findKeyForCharacter(c);
+            if (k != null) {
+                countByFinger.put(k.finger(), 
+                    countByFinger.getOrDefault(k.finger(), 0L) + f.frequency()
+                );
+                total += f.frequency();
+            }
+        }
+
+        if (total == 0) return 0.0;
+
+        // 2) Calculer la répartition réelle et comparer à l'idéal
+        double sumMalus = 0.0;
+
+        for (Finger finger : idealFingerDistribution.keySet()) {
+            double idealRatio = idealFingerDistribution.get(finger);
+            long realCount = countByFinger.getOrDefault(finger, 0L);
+            double realRatio = (double) realCount / total;
+
+            // Mesurer l'écart absolu
+            double diff = Math.abs(realRatio - idealRatio);
+
+            // On peut imaginer un malus proportionnel à diff
+            // par ex. -500.0 * diff * weightFingerDistribution
+            sumMalus += -500.0 * diff * weightFingerDistribution;
+        }
+
+        return sumMalus;
     }
 
     /**
