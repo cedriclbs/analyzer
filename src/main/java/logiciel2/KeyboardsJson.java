@@ -48,10 +48,9 @@ public class KeyboardsJson {
         public String hand;
 
         /**
-         * Constructeur vide requis pour la désérialisation avec Jackson.
+         * Constructeur vide requis pour la désérialisation avec Json.
          */
         public KeyDTO() {
-            // Jackson a besoin d'un constructeur vide
         }
     }
 }

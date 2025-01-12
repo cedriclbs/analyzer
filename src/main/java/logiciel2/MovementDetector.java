@@ -22,7 +22,7 @@ public class MovementDetector {
             return MovementType.SFB;
         }
 
-        // Même main ? => ciseau, roulement, extension latérale (LSB)
+        // Même main => ciseau, roulement, extension latérale (LSB)
         if (k1.hand() == k2.hand()) {
             if (isCiseau(k1, k2)) {
                 return MovementType.CISEAU;
@@ -37,8 +37,6 @@ public class MovementDetector {
             // Mains différentes => alternance
             return MovementType.ALTERNANCE;
         }
-
-        // Sinon inconnu
         return MovementType.UNKNOWN;
     }
 
