@@ -1,5 +1,3 @@
-# les biens-lothsavan-projet-cpoo5-24-25
-
 # Projet CPOO : Analyseur de texte et Évaluateur de disposition clavier
 
 ## Description
@@ -98,3 +96,7 @@ Les configurations pour les dispositions clavier sont dans le dossier `src/main/
 ---
 
 Nous avons conçu ce projet avec sérieux et détermination : juste assez pour nous challenger, mais pas au point de nous envoyer à la NASA.
+
+Développeurs : 
+    - Lothsavan Hugo
+    - Cédric LES BIENS
