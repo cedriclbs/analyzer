@@ -1,4 +1,4 @@
-package main.java;
+package logiciel1;
 
 /**
  * Le record {@code NGramFrequency} représente un n-gramme et sa fréquence associée.

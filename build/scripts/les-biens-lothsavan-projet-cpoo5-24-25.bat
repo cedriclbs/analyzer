@@ -74,7 +74,7 @@ set CLASSPATH=%APP_HOME%\lib\les-biens-lothsavan-projet-cpoo5-24-25.jar;%APP_HOM
 
 
 @rem Execute les-biens-lothsavan-projet-cpoo5-24-25
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %LES_BIENS_LOTHSAVAN_PROJET_CPOO5_24_25_OPTS%  -classpath "%CLASSPATH%" main.java.Main %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %LES_BIENS_LOTHSAVAN_PROJET_CPOO5_24_25_OPTS%  -classpath "%CLASSPATH%" Main %*
 
 :end
 @rem End local scope for the variables with windows NT shell

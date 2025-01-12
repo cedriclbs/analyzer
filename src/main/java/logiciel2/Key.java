@@ -1,4 +1,4 @@
-package main.java;
+package logiciel2;
 
 /**
  * Décrit une touche physique du clavier + le caractère associé.

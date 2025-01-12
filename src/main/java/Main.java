@@ -1,7 +1,5 @@
-package main.java;
-
-import main.java.Main1.*;
-import main.java.logiciel2.*;
+import logiciel1.*;
+import logiciel2.*;
 
 public class Main {
     public static void main(String[] args) {

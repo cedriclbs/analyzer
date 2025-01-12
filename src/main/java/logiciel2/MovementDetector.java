@@ -1,6 +1,6 @@
-package main.java;
+package logiciel2;
 
-
+import logiciel1.*;
 import static java.lang.Math.abs;
 
 /**

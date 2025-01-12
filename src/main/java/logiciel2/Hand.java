@@ -1,4 +1,4 @@
-package main.java;
+package logiciel2;
 
 /**
  * main gauche, main droite

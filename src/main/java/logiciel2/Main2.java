@@ -1,7 +1,6 @@
-package main.java.logiciel2;
+package logiciel2;
 
-import main.java.*;
-
+import logiciel1.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;

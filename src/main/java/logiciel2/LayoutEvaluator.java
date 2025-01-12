@@ -1,6 +1,6 @@
-package main.java;
+package logiciel2;
 
-import main.java.*;  
+import logiciel1.*;  
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

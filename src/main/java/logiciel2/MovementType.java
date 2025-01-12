@@ -1,4 +1,4 @@
-package main.java;
+package logiciel2;
 
 /**
  * Les types de mouvements (bigrammes/trigrammes) qu'on veut détecter.

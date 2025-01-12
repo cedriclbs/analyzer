@@ -1,4 +1,4 @@
-package main.java;
+package logiciel2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
