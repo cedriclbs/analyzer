@@ -1,0 +1,66 @@
+{
+    "layouts": {
+      "FR": [
+        { "character": "a", "row": 1, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "z", "row": 1, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "e", "row": 1, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "r", "row": 1, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "t", "row": 1, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "y", "row": 1, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "u", "row": 1, "column": 7,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "i", "row": 1, "column": 8,  "finger": "MIDDLE", "hand": "RIGHT"},
+        { "character": "o", "row": 1, "column": 9,  "finger": "RING",   "hand": "RIGHT"},
+        { "character": "p", "row": 1, "column": 10, "finger": "PINKY",  "hand": "RIGHT" },
+  
+        { "character": "q", "row": 2, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "s", "row": 2, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "d", "row": 2, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "f", "row": 2, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "g", "row": 2, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "h", "row": 2, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "j", "row": 2, "column": 7,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "k", "row": 2, "column": 8,  "finger": "MIDDLE", "hand": "RIGHT"},
+        { "character": "l", "row": 2, "column": 9,  "finger": "RING",   "hand": "RIGHT"},
+        { "character": "m", "row": 2, "column": 10, "finger": "PINKY",  "hand": "RIGHT" },
+  
+        { "character": "w", "row": 3, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "x", "row": 3, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "c", "row": 3, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "v", "row": 3, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "b", "row": 3, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "n", "row": 3, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"}
+      ],
+  
+      "EN": [
+        { "character": "q", "row": 1, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "w", "row": 1, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "e", "row": 1, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "r", "row": 1, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "t", "row": 1, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "y", "row": 1, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "u", "row": 1, "column": 7,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "i", "row": 1, "column": 8,  "finger": "MIDDLE", "hand": "RIGHT"},
+        { "character": "o", "row": 1, "column": 9,  "finger": "RING",   "hand": "RIGHT"},
+        { "character": "p", "row": 1, "column": 10, "finger": "PINKY",  "hand": "RIGHT" },
+  
+        { "character": "a", "row": 2, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "s", "row": 2, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "d", "row": 2, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "f", "row": 2, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "g", "row": 2, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "h", "row": 2, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "j", "row": 2, "column": 7,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "k", "row": 2, "column": 8,  "finger": "MIDDLE", "hand": "RIGHT"},
+        { "character": "l", "row": 2, "column": 9,  "finger": "RING",   "hand": "RIGHT" },
+  
+        { "character": "z", "row": 3, "column": 1,  "finger": "PINKY",  "hand": "LEFT" },
+        { "character": "x", "row": 3, "column": 2,  "finger": "RING",   "hand": "LEFT" },
+        { "character": "c", "row": 3, "column": 3,  "finger": "MIDDLE", "hand": "LEFT" },
+        { "character": "v", "row": 3, "column": 4,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "b", "row": 3, "column": 5,  "finger": "INDEX",  "hand": "LEFT" },
+        { "character": "n", "row": 3, "column": 6,  "finger": "INDEX",  "hand": "RIGHT"},
+        { "character": "m", "row": 3, "column": 7,  "finger": "MIDDLE", "hand": "RIGHT"}
+      ]
+    }
+  }
+  

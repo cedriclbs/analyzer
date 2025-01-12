@@ -4,10 +4,16 @@
 
 ## Compiler
 
-javac -d out $(find src/main/java -name "*.java")
+gradle build
 
 
 ## Run
-java -cp out main.java.Main
+
+gradle run pour voir les options de lancement sinon directement :
+
+Analyseur de texte : java -jar build/libs/les-biens-lothsavan-projet-cpoo5-24-25-all.jar 1
+
+
+Évaluateur de disposition clavier ; java -jar build/libs/les-biens-lothsavan-projet-cpoo5-24-25-all.jar 2
 
 
